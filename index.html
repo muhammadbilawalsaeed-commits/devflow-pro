@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevFlow Pro - Freelance Scope & Rate Estimator</title>
+    <title>DevFlow Pro - Universal Freelance Scope & Rate Estimator</title>
     <!-- html2pdf Library for instant PDF Export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
+    
     <style>
         * {
             box-sizing: border-box;
@@ -88,10 +87,7 @@
             color: #cbd5e1;
         }
 
-        input[type="number"],
-        input[type="text"],
-        input[type="email"],
-        select {
+        input[type="number"], input[type="text"], input[type="email"], select {
             width: 100%;
             padding: 10px;
             border-radius: 6px;
@@ -102,8 +98,7 @@
             outline: none;
         }
 
-        input:focus,
-        select:focus {
+        input:focus, select:focus {
             border-color: #38bdf8;
         }
 
@@ -124,11 +119,22 @@
             border: 1px solid #334155;
         }
 
-        .checkbox-item input {
+        .checkbox-item input[type="checkbox"] {
             width: 18px;
             height: 18px;
             cursor: pointer;
         }
+
+        .custom-add-box {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #334155;
+        }
+
+        .custom-add-box input[type="text"] { flex: 2; }
+        .custom-add-box input[type="number"] { flex: 1; }
 
         .btn {
             padding: 12px;
@@ -144,27 +150,12 @@
             width: 100%;
         }
 
-        .btn:hover {
-            background: #0369a1;
-        }
-
-        .btn-green {
-            background: #10b981;
-        }
-
-        .btn-green:hover {
-            background: #059669;
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 1px solid #38bdf8;
-            color: #38bdf8;
-        }
-
-        .btn-outline:hover {
-            background: rgba(56, 189, 248, 0.1);
-        }
+        .btn:hover { background: #0369a1; }
+        .btn-green { background: #10b981; }
+        .btn-green:hover { background: #059669; }
+        .btn-outline { background: transparent; border: 1px solid #38bdf8; color: #38bdf8; }
+        .btn-outline:hover { background: rgba(56, 189, 248, 0.1); }
+        .btn-small { padding: 8px 12px; width: auto; margin-top: 0; font-size: 0.85rem; }
 
         .btn-group {
             display: flex;
@@ -206,17 +197,8 @@
             text-align: center;
         }
 
-        .affiliate-card h3 {
-            color: #a5b4fc;
-            margin-bottom: 6px;
-            font-size: 1.1rem;
-        }
-
-        .affiliate-card p {
-            font-size: 0.85rem;
-            color: #c7d2fe;
-            margin-bottom: 12px;
-        }
+        .affiliate-card h3 { color: #a5b4fc; margin-bottom: 6px; font-size: 1.1rem; }
+        .affiliate-card p { font-size: 0.85rem; color: #c7d2fe; margin-bottom: 12px; }
 
         .hire-banner {
             background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
@@ -227,16 +209,8 @@
             text-align: center;
         }
 
-        .hire-banner h3 {
-            color: #6ee7b7;
-            margin-bottom: 6px;
-        }
-
-        .hire-banner p {
-            color: #a7f3d0;
-            font-size: 0.9rem;
-            margin-bottom: 12px;
-        }
+        .hire-banner h3 { color: #6ee7b7; margin-bottom: 6px; }
+        .hire-banner p { color: #a7f3d0; font-size: 0.9rem; margin-bottom: 12px; }
 
         footer {
             text-align: center;
@@ -246,248 +220,332 @@
         }
     </style>
 </head>
-
 <body>
 
-    <div class="container">
-        <header>
-            <h1>⚡ DevFlow Pro</h1>
-            <p>Smart Freelance Calculator, Scope Estimator & Client Proposal Generator</p>
-        </header>
+<div class="container">
+    <header>
+        <h1>⚡ DevFlow Pro</h1>
+        <p>Universal Calculator & Scope Estimator for All Freelancers & Agencies Worldwide</p>
+    </header>
 
-        <div class="ad-zone-top">
-            📢 <span>[Google AdSense Banner Space - 728x90]</span>
-        </div>
+    <div class="ad-zone-top">
+        📢 <span>[Google AdSense Banner Space - 728x90]</span>
+    </div>
 
-        <div class="app-grid">
-
-            <!-- CARD 1: RATE CALCULATOR & CURRENCY SWITCHER -->
-            <div class="card">
-                <h2>1. Rate & Currency Settings</h2>
-
-                <div class="form-group">
-                    <label>Select Currency:</label>
-                    <select id="currency" onchange="calculateRate()">
-                        <option value="$">$ (USD)</option>
-                        <option value="PKR ">PKR (Pakistani Rupee)</option>
-                        <option value="€">€ (Euro)</option>
-                        <option value="₹">₹ (INR)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Target Monthly Income:</label>
-                    <input type="number" id="monthlyGoal" value="2000" oninput="calculateRate()">
-                </div>
-
-                <div class="form-group">
-                    <label>Monthly Expenses (Software/Bills):</label>
-                    <input type="number" id="monthlyExpenses" value="200" oninput="calculateRate()">
-                </div>
-
-                <div class="form-group">
-                    <label>Weekly Working Hours:</label>
-                    <input type="number" id="weeklyHours" value="30" oninput="calculateRate()">
-                </div>
-
-                <div class="result-box">
-                    <p>Required Rate / Hour:</p>
-                    <p class="highlight" id="calculatedRate" style="font-size: 1.4rem;">$18.33 / hr</p>
-                </div>
+    <div class="app-grid">
+        
+        <!-- CARD 1: RATE CALCULATOR & CURRENCY -->
+        <div class="card">
+            <h2>1. Rate & Currency Settings</h2>
+            
+            <div class="form-group">
+                <label>Select Currency:</label>
+                <select id="currency" onchange="calculateRate()">
+                    <option value="$">$ (USD)</option>
+                    <option value="PKR ">PKR (Pakistani Rupee)</option>
+                    <option value="€">€ (Euro)</option>
+                    <option value="₹">₹ (INR)</option>
+                    <option value="£">£ (GBP)</option>
+                    <option value="AED ">AED (Dirham)</option>
+                </select>
             </div>
 
-            <!-- CARD 2: PROJECT SCOPE BUILDER -->
-            <div class="card">
-                <h2>2. Project Scope & Features</h2>
-                <div class="form-group">
-                    <label>Client Name / Title:</label>
-                    <input type="text" id="clientName" placeholder="e.g. John / E-Commerce Project">
-                </div>
-
-                <div class="form-group">
-                    <label>Client Email (For direct sending):</label>
-                    <input type="email" id="clientEmail" placeholder="client@example.com">
-                </div>
-
-                <label>Select Included Features:</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <span>🎨 Custom UI/UX Design (15 hrs)</span>
-                        <input type="checkbox" value="15" class="feature-check" onchange="calculateProject()">
-                    </div>
-                    <div class="checkbox-item">
-                        <span>📱 Fully Responsive Layout (10 hrs)</span>
-                        <input type="checkbox" value="10" class="feature-check" checked onchange="calculateProject()">
-                    </div>
-                    <div class="checkbox-item">
-                        <span>🔐 User Auth & Database (12 hrs)</span>
-                        <input type="checkbox" value="12" class="feature-check" onchange="calculateProject()">
-                    </div>
-                    <div class="checkbox-item">
-                        <span>💳 Payment Gateway Setup (8 hrs)</span>
-                        <input type="checkbox" value="8" class="feature-check" onchange="calculateProject()">
-                    </div>
-                    <div class="checkbox-item">
-                        <span>⚡ Admin Control Panel (20 hrs)</span>
-                        <input type="checkbox" value="20" class="feature-check" onchange="calculateProject()">
-                    </div>
-                </div>
-
-                <div class="result-box">
-                    <p>Total Estimated Time: <span class="highlight" id="totalHours">10 hrs</span></p>
-                    <p>Total Project Quote: <span class="highlight" id="totalPrice">$183.33</span></p>
-                </div>
+            <div class="form-group">
+                <label>Target Monthly Income:</label>
+                <input type="number" id="monthlyGoal" value="2000" oninput="calculateRate()">
             </div>
 
-        </div>
+            <div class="form-group">
+                <label>Monthly Expenses (Tools/Bills):</label>
+                <input type="number" id="monthlyExpenses" value="200" oninput="calculateRate()">
+            </div>
 
-        <!-- CARD 3: PROPOSAL & PDF GENERATOR -->
-        <div class="card" style="margin-top: 20px;">
-            <h2>3. Smart Client Proposal & Export</h2>
-            <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px;">Generates a dynamic client proposal
-                ready to email or export as PDF.</p>
-
-            <button class="btn" onclick="generateProposal()">Generate Proposal Preview</button>
-
-            <div id="pdfContent">Your generated proposal summary will appear here...</div>
-
-            <div class="btn-group">
-                <button class="btn btn-green" onclick="downloadPDF()">📄 Download Proposal PDF</button>
-                <button class="btn btn-outline" onclick="sendEmail()">✉️ Email Direct to Client</button>
+            <div class="form-group">
+                <label>Weekly Working Hours:</label>
+                <input type="number" id="weeklyHours" value="30" oninput="calculateRate()">
+            </div>
+            
+            <div class="result-box">
+                <p>Required Rate / Hour:</p>
+                <p class="highlight" id="calculatedRate" style="font-size: 1.4rem;">$18.33 / hr</p>
             </div>
         </div>
 
-        <!-- HOSTINGER REFERRAL CARD -->
-        <div class="affiliate-card">
-            <h3>🚀 Ready to Launch Your Client's Site?</h3>
-            <p>Get high-speed Web Hosting with Free Domain & SSL via Hostinger. Exclusive discount for DevFlow users!
-            </p>
-            <a href="https://www.hostinger.com/pk?REFERRALCODE=EEOMUHAMMVWW" target="_blank"
-                style="text-decoration: none;">
-                <button class="btn" style="width: auto; padding: 10px 25px; background: #6366f1;">Claim Hosting Discount
-                    ➔</button>
-            </a>
-        </div>
+        <!-- CARD 2: DYNAMIC CATEGORY & CUSTOM SCOPE BUILDER -->
+        <div class="card">
+            <h2>2. Project Scope & Field</h2>
+            
+            <div class="form-group">
+                <label>Select Industry / Niche:</label>
+                <select id="fieldCategory" onchange="loadCategoryFeatures()">
+                    <option value="webdev">💻 Web & Software Development</option>
+                    <option value="design">🎨 Graphic Design & Branding</option>
+                    <option value="video">🎬 Video Editing & Motion Graphics</option>
+                    <option value="writing">📝 Content Writing, SEO & Translation</option>
+                    <option value="marketing">📈 Digital Marketing & Social Media</option>
+                    <option value="va">💼 Virtual Assistant & Data Entry</option>
+                    <option value="other">🌐 Custom Service / Any Other Niche</option>
+                </select>
+            </div>
 
-        <!-- LEAD GENERATION / HIRE ME BANNER -->
-        <!-- LEAD GENERATION / HIRE ME BANNER -->
-        <div class="hire-banner">
-            <h3>💼 Need Web Development, Custom Coding or Bug Fixes?</h3>
-            <p>Hi, I'm Muhammad Bilawal Saeed Bhatti! I offer full-stack web development, custom Shopify/React builds,
-                and expert bug fixing.</p>
-            <a href="https://www.fiverr.com/u_c03070a38f3a" target="_blank" style="text-decoration: none;">
-                <button class="btn btn-green" style="width: auto; padding: 10px 25px;">Check My Fiverr Services & Gigs
-                    ➔</button>
-            </a>
-        </div>
+            <div class="form-group">
+                <label>Client Name / Title:</label>
+                <input type="text" id="clientName" placeholder="e.g. John / Project Quote">
+            </div>
 
-        <footer>
-            <p>© 2026 DevFlow Pro — Built by MBS Services. All rights reserved.</p>
-        </footer>
+            <div class="form-group">
+                <label>Client Email (For direct proposal sending):</label>
+                <input type="email" id="clientEmail" placeholder="client@example.com">
+            </div>
+
+            <label>Included Tasks & Scope:</label>
+            <div class="checkbox-group" id="featuresContainer">
+                <!-- Features dynamically load here -->
+            </div>
+
+            <!-- ADD CUSTOM TASK OPTION -->
+            <div class="custom-add-box">
+                <input type="text" id="customTaskName" placeholder="Add custom service...">
+                <input type="number" id="customTaskHrs" placeholder="Hrs" style="width:70px;">
+                <button class="btn btn-small" onclick="addCustomTask()">+ Add</button>
+            </div>
+
+            <div class="result-box">
+                <p>Total Estimated Time: <span class="highlight" id="totalHours">0 hrs</span></p>
+                <p>Total Project Quote: <span class="highlight" id="totalPrice">$0.00</span></p>
+            </div>
+        </div>
 
     </div>
 
-    <script>
-        function getSymbol() {
-            return document.getElementById("currency").value;
+    <!-- CARD 3: PROPOSAL & PDF GENERATOR -->
+    <div class="card" style="margin-top: 20px;">
+        <h2>3. Smart Client Proposal & Export</h2>
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px;">Generates a dynamic client proposal ready to email or export as PDF.</p>
+        
+        <button class="btn" onclick="generateProposal()">Generate Proposal Preview</button>
+        
+        <div id="pdfContent">Your generated proposal summary will appear here...</div>
+
+        <div class="btn-group">
+            <button class="btn btn-green" onclick="downloadPDF()">📄 Download Proposal PDF</button>
+            <button class="btn btn-outline" onclick="sendEmail()">✉️ Email Direct to Client</button>
+        </div>
+    </div>
+
+    <!-- HOSTINGER REFERRAL CARD -->
+    <div class="affiliate-card">
+        <h3>🚀 Ready to Launch Your Client's Site?</h3>
+        <p>Get high-speed Web Hosting with Free Domain & SSL via Hostinger. Exclusive discount for DevFlow users!</p>
+        <a href="https://www.hostinger.com/pk?REFERRALCODE=EEOMUHAMMVWW" target="_blank" style="text-decoration: none;">
+            <button class="btn" style="width: auto; padding: 10px 25px; background: #6366f1;">Claim Hosting Discount ➔</button>
+        </a>
+    </div>
+
+    <!-- LEAD GENERATION / HIRE ME BANNER -->
+    <div class="hire-banner">
+        <h3>💼 Need Custom Web Development or Bug Fixes?</h3>
+        <p>Hi, I'm Muhammad Bilawal Saeed Bhatti! I build high-performance web applications, custom e-commerce solutions, and fix complex bugs.</p>
+        <a href="https://www.fiverr.com/mbs_services" target="_blank" style="text-decoration: none;">
+            <button class="btn btn-green" style="width: auto; padding: 10px 25px;">Check My Fiverr Profile ➔</button>
+        </a>
+    </div>
+
+    <footer>
+        <p>© 2026 DevFlow Pro — Built by MBS Services. All rights reserved.</p>
+    </footer>
+
+</div>
+
+<script>
+    const featureData = {
+        webdev: [
+            { text: "🎨 Custom UI/UX Design", hrs: 15 },
+            { text: "📱 Fully Responsive Layout", hrs: 10, checked: true },
+            { text: "🔐 User Auth & Database", hrs: 12 },
+            { text: "💳 Payment Gateway Integration", hrs: 8 },
+            { text: "⚡ Admin Control Panel", hrs: 20 }
+        ],
+        design: [
+            { text: "🎯 Logo & Brand Guidelines", hrs: 10, checked: true },
+            { text: "🎨 Social Media Kit (10 Posts)", hrs: 8 },
+            { text: "📄 Flyer / Brochure Design", hrs: 5 },
+            { text: "📦 Product Packaging Design", hrs: 12 }
+        ],
+        video: [
+            { text: "✂️ Video Editing & Cutting", hrs: 8, checked: true },
+            { text: "🎵 Audio Clean-up & Sound Effects", hrs: 4 },
+            { text: "💫 Motion Graphics & Titles", hrs: 10 },
+            { text: "🎨 Color Grading", hrs: 5 }
+        ],
+        writing: [
+            { text: "📝 2,000 Words SEO Article/Blog", hrs: 6, checked: true },
+            { text: "🔍 Keyword Research & Strategy", hrs: 4 },
+            { text: "🌐 Website Landing Page Copy", hrs: 8 },
+            { text: "📧 Email Newsletter Sequence", hrs: 5 }
+        ],
+        marketing: [
+            { text: "🎯 Meta/Google Ad Campaign Setup", hrs: 8, checked: true },
+            { text: "📊 Monthly Analytics & Reporting", hrs: 5 },
+            { text: "👥 Social Media Community Mgmt", hrs: 15 },
+            { text: "✉️ Email Marketing Automation", hrs: 10 }
+        ],
+        va: [
+            { text: "📂 Data Entry & Excel Management", hrs: 10, checked: true },
+            { text: "📧 Email & Calendar Management", hrs: 8 },
+            { text: "📞 Customer Support Handling", hrs: 20 },
+            { text: "🛍️ E-commerce Product Upload", hrs: 12 }
+        ],
+        other: [
+            { text: "⚡ Primary Project Service", hrs: 10, checked: true },
+            { text: "🔍 Research & Quality Review", hrs: 5 }
+        ]
+    };
+
+    function loadCategoryFeatures() {
+        let selectedCategory = document.getElementById("fieldCategory").value;
+        let container = document.getElementById("featuresContainer");
+        container.innerHTML = "";
+
+        let list = featureData[selectedCategory] || featureData.other;
+
+        list.forEach((item) => {
+            appendTaskItem(item.text, item.hrs, item.checked);
+        });
+
+        calculateProject();
+    }
+
+    function appendTaskItem(text, hrs, isChecked = false) {
+        let container = document.getElementById("featuresContainer");
+        let div = document.createElement("div");
+        div.className = "checkbox-item";
+        div.innerHTML = `
+            <span>${text} (${hrs} hrs)</span>
+            <input type="checkbox" value="${hrs}" class="feature-check" ${isChecked ? 'checked' : ''} onchange="calculateProject()">
+        `;
+        container.appendChild(div);
+    }
+
+    function addCustomTask() {
+        let nameInput = document.getElementById("customTaskName");
+        let hrsInput = document.getElementById("customTaskHrs");
+
+        let taskName = nameInput.value.trim();
+        let taskHrs = Number(hrsInput.value) || 0;
+
+        if (!taskName || taskHrs <= 0) {
+            alert("Karam karke Task Name aur Sahi Hours enter karein!");
+            return;
         }
 
-        function getHourlyRate() {
-            let goal = Number(document.getElementById("monthlyGoal").value) || 0;
-            let expenses = Number(document.getElementById("monthlyExpenses").value) || 0;
-            let hoursPerWeek = Number(document.getElementById("weeklyHours").value) || 1;
+        appendTaskItem(`✨ ${taskName}`, taskHrs, true);
+        
+        nameInput.value = "";
+        hrsInput.value = "";
+        calculateProject();
+    }
 
-            let totalMonthlyTarget = goal + expenses;
-            let totalMonthlyHours = hoursPerWeek * 4;
+    function getSymbol() {
+        return document.getElementById("currency").value;
+    }
 
-            return totalMonthlyTarget / totalMonthlyHours;
-        }
+    function getHourlyRate() {
+        let goal = Number(document.getElementById("monthlyGoal").value) || 0;
+        let expenses = Number(document.getElementById("monthlyExpenses").value) || 0;
+        let hoursPerWeek = Number(document.getElementById("weeklyHours").value) || 1;
 
-        function calculateRate() {
-            let rate = getHourlyRate();
-            let curr = getSymbol();
-            document.getElementById("calculatedRate").innerText = curr + rate.toFixed(2) + " / hr";
-            calculateProject();
-        }
+        let totalMonthlyTarget = goal + expenses;
+        let totalMonthlyHours = hoursPerWeek * 4;
+        
+        return totalMonthlyTarget / totalMonthlyHours;
+    }
 
-        function calculateProject() {
-            let hourlyRate = getHourlyRate();
-            let checkboxes = document.querySelectorAll(".feature-check");
-            let totalHours = 0;
-            let curr = getSymbol();
+    function calculateRate() {
+        let rate = getHourlyRate();
+        let curr = getSymbol();
+        document.getElementById("calculatedRate").innerText = curr + rate.toFixed(2) + " / hr";
+        calculateProject();
+    }
 
-            checkboxes.forEach(function (box) {
-                if (box.checked) {
-                    totalHours += Number(box.value);
-                }
-            });
+    function calculateProject() {
+        let hourlyRate = getHourlyRate();
+        let checkboxes = document.querySelectorAll(".feature-check");
+        let totalHours = 0;
+        let curr = getSymbol();
 
-            let totalPrice = totalHours * hourlyRate;
+        checkboxes.forEach(function(box) {
+            if (box.checked) {
+                totalHours += Number(box.value);
+            }
+        });
 
-            document.getElementById("totalHours").innerText = totalHours + " hrs";
-            document.getElementById("totalPrice").innerText = curr + totalPrice.toFixed(2);
-        }
+        let totalPrice = totalHours * hourlyRate;
 
-        function generateProposal() {
-            let client = document.getElementById("clientName").value || "Valued Client";
-            let curr = getSymbol();
-            let rate = getHourlyRate().toFixed(2);
-            let hours = document.getElementById("totalHours").innerText;
-            let price = document.getElementById("totalPrice").innerText;
+        document.getElementById("totalHours").innerText = totalHours + " hrs";
+        document.getElementById("totalPrice").innerText = curr + totalPrice.toFixed(2);
+    }
 
-            let proposal =
-                `PROJECT PROPOSAL & ESTIMATE SUMMARY
+    function generateProposal() {
+        let client = document.getElementById("clientName").value || "Valued Client";
+        let curr = getSymbol();
+        let rate = getHourlyRate().toFixed(2);
+        let hours = document.getElementById("totalHours").innerText;
+        let price = document.getElementById("totalPrice").innerText;
+
+        let proposal = 
+`PROJECT PROPOSAL & ESTIMATE SUMMARY
 --------------------------------------------------
 Client: ${client}
 Date: ${new Date().toLocaleDateString()}
 
 ESTIMATE BREAKDOWN:
-- Base Rate: ${curr}${rate} / hour
-- Estimated Development Time: ${hours}
+- Base Hourly Rate: ${curr}${rate} / hour
+- Estimated Project Time: ${hours}
 - Total Project Quote: ${price}
 
 INCLUDED SERVICES:
-- Complete Frontend & Logic Execution
-- Testing, Quality Assurance & Mobile Optimization
+- Execution according to custom selected scope
+- Quality Assurance & Review
 
 NEXT STEPS:
-Reply to this estimate to confirm milestones and launch project development.
+Reply to this estimate to confirm project milestones.
 
 Best regards,
-Muhammad Bilawal Saeed Bhatti (Lead Developer)
+Muhammad Bilawal Saeed Bhatti
 MBS Services`;
 
-            document.getElementById("pdfContent").innerText = proposal;
+        document.getElementById("pdfContent").innerText = proposal;
+    }
+
+    function downloadPDF() {
+        let element = document.getElementById('pdfContent');
+        let client = document.getElementById("clientName").value || "Client";
+        
+        let opt = {
+            margin:       0.5,
+            filename:     `Proposal_${client}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    }
+
+    function sendEmail() {
+        let email = document.getElementById("clientEmail").value;
+        if(!email) {
+            alert("Pehle Client ka Email address enter karein!");
+            return;
         }
+        let proposal = encodeURIComponent(document.getElementById("pdfContent").innerText);
+        window.location.href = `mailto:${email}?subject=Project Proposal & Estimate&body=${proposal}`;
+    }
 
-        function downloadPDF() {
-            let element = document.getElementById('pdfContent');
-            let client = document.getElementById("clientName").value || "Client";
-
-            let opt = {
-                margin: 0.5,
-                filename: `Proposal_${client}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-
-            html2pdf().set(opt).from(element).save();
-        }
-
-        function sendEmail() {
-            let email = document.getElementById("clientEmail").value;
-            if (!email) {
-                alert("Pehle Client ka Email address enter karein!");
-                return;
-            }
-            let proposal = encodeURIComponent(document.getElementById("pdfContent").innerText);
-            window.location.href = `mailto:${email}?subject=Project Proposal & Estimate&body=${proposal}`;
-        }
-
-        calculateRate();
-    </script>
+    loadCategoryFeatures();
+    calculateRate();
+</script>
 
 </body>
-
 </html>
