@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevFlow Pro - Freelance Scope & Rate Estimator</title>
+    <!-- html2pdf Library for instant PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        header h1 {
+            font-size: 2.4rem;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: #94a3b8;
+        }
+
+        /* Ad Placement Top Zone */
+        .ad-zone-top {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed #475569;
+            text-align: center;
+            padding: 12px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 22px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .card h2 {
+            font-size: 1.25rem;
+            color: #f1f5f9;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #38bdf8;
+            padding-bottom: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.88rem;
+            color: #cbd5e1;
+        }
+
+        input[type="number"], input[type="text"], input[type="email"], select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #475569;
+            background: #0f172a;
+            color: #fff;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: #38bdf8;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0f172a;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+        }
+
+        .checkbox-item input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 12px;
+            background: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .btn:hover { background: #0369a1; }
+        .btn-green { background: #10b981; }
+        .btn-green:hover { background: #059669; }
+        .btn-outline { background: transparent; border: 1px solid #38bdf8; color: #38bdf8; }
+        .btn-outline:hover { background: rgba(56, 189, 248, 0.1); }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .result-box {
+            background: #0f172a;
+            border-left: 4px solid #38bdf8;
+            padding: 14px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .highlight {
+            color: #38bdf8;
+            font-weight: bold;
+        }
+
+        /* Proposal Box & PDF Export Zone */
+        #pdfContent {
+            background: #090d16;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #475569;
+            font-family: monospace;
+            font-size: 0.85rem;
+            color: #a7f3d0;
+            white-space: pre-wrap;
+            margin-top: 12px;
+        }
+
+        /* Affiliate & Lead Generation Cards */
+        .affiliate-card {
+            background: linear-gradient(135deg, #1e1b4b 0%, #311b92 100%);
+            border: 1px solid #6366f1;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .affiliate-card h3 { color: #a5b4fc; margin-bottom: 6px; font-size: 1.1rem; }
+        .affiliate-card p { font-size: 0.85rem; color: #c7d2fe; margin-bottom: 12px; }
+
+        .hire-banner {
+            background: linear-gradient(135deg, #064e3b 0%, #022c22 100%);
+            border: 1px solid #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .hire-banner h3 { color: #6ee7b7; margin-bottom: 6px; }
+        .hire-banner p { color: #a7f3d0; font-size: 0.9rem; margin-bottom: 12px; }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>⚡ DevFlow Pro</h1>
+        <p>Smart Freelance Calculator, Scope Estimator & Client Proposal Generator</p>
+    </header>
+
+    <!-- Google AdSense Top Zone Placeholder -->
+    <div class="ad-zone-top">
+        📢 <span>[Google AdSense Banner Space - 728x90]</span>
+    </div>
+
+    <div class="app-grid">
+        
+        <!-- CARD 1: RATE CALCULATOR -->
+        <div class="card">
+            <h2>1. Rate & Currency Settings</h2>
+            
+            <div class="form-group">
+                <label>Select Currency:</label>
+                <select id="currency" onchange="calculateRate()">
+                    <option value="$">$ (USD)</option>
+                    <option value="PKR ">PKR (Pakistani Rupee)</option>
+                    <option value="€">€ (Euro)</option>
+                    <option value="₹">₹ (INR)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Target Monthly Income:</label>
+                <input type="number" id="monthlyGoal" value="2000" oninput="calculateRate()">
+            </div>
+
+            <div class="form-group">
+                <label>Monthly Expenses (Software/Bills):</label>
+                <input type="number" id="monthlyExpenses" value="200" oninput="calculateRate()">
+            </div>
+
+            <div class="form-group">
+                <label>Weekly Working Hours:</label>
+                <input type="number" id="weeklyHours" value="30" oninput="calculateRate()">
+            </div>
+            
+            <div class="result-box">
+                <p>Required Rate / Hour:</p>
+                <p class="highlight" id="calculatedRate" style="font-size: 1.4rem;">$18.33 / hr</p>
+            </div>
+        </div>
+
+        <!-- CARD 2: PROJECT SCOPE BUILDER -->
+        <div class="card">
+            <h2>2. Project Scope & Scope</h2>
+            <div class="form-group">
+                <label>Client Name / Title:</label>
+                <input type="text" id="clientName" placeholder="e.g. John / E-Commerce Project">
+            </div>
+
+            <div class="form-group">
+                <label>Client Email (For direct sending):</label>
+                <input type="email" id="clientEmail" placeholder="client@example.com">
+            </div>
+
+            <label>Select Features:</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <span>🎨 Custom UI/UX Design (15 hrs)</span>
+                    <input type="checkbox" value="15" class="feature-check" onchange="calculateProject()">
+                </div>
+                <div class="checkbox-item">
+                    <span>📱 Fully Responsive Layout (10 hrs)</span>
+                    <input type="checkbox" value="10" class="feature-check" checked onchange="calculateProject()">
+                </div>
+                <div class="checkbox-item">
+                    <span>🔐 User Auth & Database (12 hrs)</span>
+                    <input type="checkbox" value="12" class="feature-check" onchange="calculateProject()">
+                </div>
+                <div class="checkbox-item">
+                    <span>💳 Payment Gateway Setup (8 hrs)</span>
+                    <input type="checkbox" value="8" class="feature-check" onchange="calculateProject()">
+                </div>
+                <div class="checkbox-item">
+                    <span>⚡ Admin Control Panel (20 hrs)</span>
+                    <input type="checkbox" value="20" class="feature-check" onchange="calculateProject()">
+                </div>
+            </div>
+
+            <div class="result-box">
+                <p>Total Estimated Time: <span class="highlight" id="totalHours">10 hrs</span></p>
+                <p>Total Project Quote: <span class="highlight" id="totalPrice">$183.33</span></p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CARD 3: PROPOSAL & PDF GENERATOR -->
+    <div class="card" style="margin-top: 20px;">
+        <h2>3. Smart Client Proposal & Export</h2>
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 10px;">Generates a dynamic client proposal ready to email or export as PDF.</p>
+        
+        <button class="btn" onclick="generateProposal()">Generate Proposal Preview</button>
+        
+        <div id="pdfContent">Your generated proposal summary will appear here...</div>
+
+        <div class="btn-group">
+            <button class="btn btn-green" onclick="downloadPDF()">📄 Download Proposal PDF</button>
+            <button class="btn btn-outline" onclick="sendEmail()">✉️ Email Direct to Client</button>
+        </div>
+    </div>
+
+    <!-- AFFILIATE MONETIZATION CARD -->
+    <div class="affiliate-card">
+        <h3>🚀 Ready to Launch Your Client's Site?</h3>
+        <p>Get high-speed Web Hosting with Free Domain & SSL via Hostinger. Exclusive 75% Discount for DevFlow users!</p>
+        <!-- Replace href with your Hostinger Affiliate Link later -->
+        <a href="https://www.hostinger.com" target="_blank" style="text-decoration: none;">
+            <button class="btn" style="width: auto; padding: 10px 25px; background: #6366f1;">Claim 75% Hosting Discount ➔</button>
+        </a>
+    </div>
+
+    <!-- LEAD GENERATION / HIRE ME BANNER -->
+    <div class="hire-banner">
+        <h3>💼 Need Custom Web Development or Bug Fixes?</h3>
+        <p>Hi, I'm Muhammad Bilawal! I build high-performance web applications and custom e-commerce solutions.</p>
+        <!-- Replace href with your Fiverr / Portfolio URL -->
+        <a href="https://fiverr.com" target="_blank" style="text-decoration: none;">
+            <button class="btn btn-green" style="width: auto; padding: 10px 25px;">Hire Me on Fiverr ➔</button>
+        </a>
+    </div>
+
+    <footer>
+        <p>© 2026 DevFlow Pro — Built by MBS Services. All rights reserved.</p>
+    </footer>
+
+</div>
+
+<script>
+    function getSymbol() {
+        return document.getElementById("currency").value;
+    }
+
+    function getHourlyRate() {
+        let goal = Number(document.getElementById("monthlyGoal").value) || 0;
+        let expenses = Number(document.getElementById("monthlyExpenses").value) || 0;
+        let hoursPerWeek = Number(document.getElementById("weeklyHours").value) || 1;
+
+        let totalMonthlyTarget = goal + expenses;
+        let totalMonthlyHours = hoursPerWeek * 4;
+        
+        return totalMonthlyTarget / totalMonthlyHours;
+    }
+
+    function calculateRate() {
+        let rate = getHourlyRate();
+        let curr = getSymbol();
+        document.getElementById("calculatedRate").innerText = curr + rate.toFixed(2) + " / hr";
+        calculateProject();
+    }
+
+    function calculateProject() {
+        let hourlyRate = getHourlyRate();
+        let checkboxes = document.querySelectorAll(".feature-check");
+        let totalHours = 0;
+        let curr = getSymbol();
+
+        checkboxes.forEach(function(box) {
+            if (box.checked) {
+                totalHours += Number(box.value);
+            }
+        });
+
+        let totalPrice = totalHours * hourlyRate;
+
+        document.getElementById("totalHours").innerText = totalHours + " hrs";
+        document.getElementById("totalPrice").innerText = curr + totalPrice.toFixed(2);
+    }
+
+    function generateProposal() {
+        let client = document.getElementById("clientName").value || "Valued Client";
+        let curr = getSymbol();
+        let rate = getHourlyRate().toFixed(2);
+        let hours = document.getElementById("totalHours").innerText;
+        let price = document.getElementById("totalPrice").innerText;
+
+        let proposal = 
+`PROJECT PROPOSAL & ESTIMATE SUMMARY
+--------------------------------------------------
+Client: ${client}
+Date: ${new Date().toLocaleDateString()}
+
+ESTIMATE BREAKDOWN:
+- Base Rate: ${curr}${rate} / hour
+- Estimated Development Time: ${hours}
+- Total Project Quote: ${price}
+
+INCLUDED SERVICES:
+- Complete Frontend & Logic Execution
+- Testing, Quality Assurance & Mobile Optimization
+
+NEXT STEPS:
+Reply to this estimate to confirm milestones and launch project development.
+
+Best regards,
+Muhammad Bilawal (Lead Developer)
+MBS Services`;
+
+        document.getElementById("pdfContent").innerText = proposal;
+    }
+
+    // Export PDF Logic
+    function downloadPDF() {
+        let element = document.getElementById('pdfContent');
+        let client = document.getElementById("clientName").value || "Client";
+        
+        let opt = {
+            margin:       0.5,
+            filename:     `Proposal_${client}.pdf`,
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2 },
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(element).save();
+    }
+
+    // Direct Email Send Logic
+    function sendEmail() {
+        let email = document.getElementById("clientEmail").value;
+        if(!email) {
+            alert("Pehle Client ka Email address enter karein!");
+            return;
+        }
+        let proposal = encodeURIComponent(document.getElementById("pdfContent").innerText);
+        window.location.href = `mailto:${email}?subject=Project Proposal & Estimate&body=${proposal}`;
+    }
+
+    // Auto calculate on load
+    calculateRate();
+</script>
+
+</body>
+</html>
