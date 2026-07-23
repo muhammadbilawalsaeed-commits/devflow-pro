@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visual CSS Flexbox & Grid code generator. Auto-generate pure CSS and Tailwind CSS classes with instant live preview. Free developer tool by MBS Services.">
+    <title>Smart CSS Grid & Flexbox Generator | MBS Services</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyanBrand: {
+                            500: '#06b6d4',
+                            600: '#0891b2',
+                            700: '#0e7490',
+                            950: '#083344'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .code-grid {
+            background-image: radial-gradient(rgba(6, 182, 212, 0.12) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between code-grid">
+
+    <!-- Header Navigation -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-cyan-900/40 sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-cyan-500 to-blue-600 p-2.5 rounded-xl text-white font-black text-xl shadow-lg shadow-cyan-500/20">
+                    <i class="fa-solid fa-cubes"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight block leading-tight text-white">LayoutLab<span class="text-cyan-400">.CSS</span></span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest">Powered by MBS Services</span>
+                </div>
+            </a>
+            <div class="flex items-center space-x-3">
+                <a href="quote.html" class="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition-all shadow-lg shadow-cyan-500/20 flex items-center">
+                    <i class="fa-solid fa-code mr-1.5"></i> Hire Developer
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Ad Banner -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+        <div class="bg-slate-900/80 border border-dashed border-cyan-900/40 rounded-2xl p-3 text-center text-xs text-slate-500 uppercase tracking-widest font-semibold">
+            <span>Google AdSense Slot (Top Banner)</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-8">
+            <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 mb-3">
+                <i class="fa-solid fa-wand-magic-sparkles mr-1.5"></i> Developer Layout Suite
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+                Smart CSS Flexbox & Grid Generator
+            </h1>
+            <p class="mt-3 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto">
+                Visually design, preview, and generate production-ready CSS and Tailwind CSS layout code instantly.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Side: Controls Panel (5 Cols) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <div class="bg-slate-900 border border-cyan-900/30 rounded-3xl p-6 shadow-2xl space-y-5">
+                    
+                    <!-- Mode Switcher -->
+                    <div class="flex bg-slate-950 p-1.5 rounded-2xl border border-slate-800">
+                        <button id="flexModeBtn" onclick="setMode('flex')" class="flex-1 py-2 text-xs font-bold rounded-xl bg-cyan-500 text-slate-950 transition-all">
+                            Flexbox Mode
+                        </button>
+                        <button id="gridModeBtn" onclick="setMode('grid')" class="flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white transition-all">
+                            CSS Grid Mode
+                        </button>
+                    </div>
+
+                    <!-- Flexbox Controls -->
+                    <div id="flexControls" class="space-y-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Flex Direction</label>
+                            <select id="flexDirection" onchange="updateLayout()" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-cyan-500">
+                                <option value="row">row (Horizontal)</option>
+                                <option value="row-reverse">row-reverse</option>
+                                <option value="column">column (Vertical)</option>
+                                <option value="column-reverse">column-reverse</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Justify Content</label>
+                            <select id="justifyContent" onchange="updateLayout()" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-cyan-500">
+                                <option value="flex-start">flex-start (Left/Top)</option>
+                                <option value="center" selected>center</option>
+                                <option value="flex-end">flex-end (Right/Bottom)</option>
+                                <option value="space-between">space-between</option>
+                                <option value="space-around">space-around</option>
+                                <option value="space-evenly">space-evenly</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Align Items</label>
+                            <select id="alignItems" onchange="updateLayout()" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-cyan-500">
+                                <option value="stretch">stretch</option>
+                                <option value="center" selected>center</option>
+                                <option value="flex-start">flex-start</option>
+                                <option value="flex-end">flex-end</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grid Controls -->
+                    <div id="gridControls" class="space-y-4 hidden">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Columns Count</label>
+                                <span id="colsVal" class="text-xs font-bold text-cyan-400">3 Columns</span>
+                            </div>
+                            <input type="range" id="gridCols" min="1" max="6" value="3" oninput="updateLayout()" class="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Rows Count</label>
+                                <span id="rowsVal" class="text-xs font-bold text-cyan-400">2 Rows</span>
+                            </div>
+                            <input type="range" id="gridRows" min="1" max="4" value="2" oninput="updateLayout()" class="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        </div>
+                    </div>
+
+                    <!-- Common Controls (Gap & Items Count) -->
+                    <div class="space-y-4 pt-2 border-t border-slate-800">
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Gap (px)</label>
+                                <span id="gapVal" class="text-xs font-bold text-cyan-400">16px</span>
+                            </div>
+                            <input type="range" id="layoutGap" min="0" max="50" value="16" oninput="updateLayout()" class="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Preview Boxes</label>
+                                <span id="itemsVal" class="text-xs font-bold text-cyan-400">4 Items</span>
+                            </div>
+                            <input type="range" id="itemCount" min="1" max="12" value="4" oninput="updateLayout()" class="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Side: Live Visual Canvas & Code Output (7 Cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <!-- Canvas Box -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl">
+                    <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider block mb-4">
+                        <i class="fa-solid fa-eye text-cyan-400 mr-1.5"></i> Live Interactive Canvas
+                    </span>
+                    
+                    <div id="visualCanvas" class="w-full min-h-[260px] bg-slate-950 border border-slate-800 rounded-2xl p-4 transition-all">
+                        <!-- Dynamic Boxes Populated Here -->
+                    </div>
+                </div>
+
+                <!-- Code Outputs (CSS & Tailwind) -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
+                    
+                    <!-- CSS Code -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider"><i class="fa-fab fa-css3-alt text-blue-400 mr-1"></i> Pure CSS Code</span>
+                            <button onclick="copyCode('cssOutput')" class="text-[11px] bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded-xl text-cyan-400 transition-all font-bold">Copy CSS</button>
+                        </div>
+                        <pre id="cssOutput" class="bg-slate-950 text-cyan-300 p-4 rounded-2xl border border-slate-800 text-xs font-mono overflow-x-auto"></pre>
+                    </div>
+
+                    <!-- Tailwind CSS Code -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider"><i class="fa-solid fa-code text-teal-400 mr-1"></i> Tailwind CSS Classes</span>
+                            <button onclick="copyCode('tailwindOutput')" class="text-[11px] bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded-xl text-teal-400 transition-all font-bold">Copy Tailwind</button>
+                        </div>
+                        <pre id="tailwindOutput" class="bg-slate-950 text-teal-300 p-4 rounded-2xl border border-slate-800 text-xs font-mono overflow-x-auto"></pre>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p>© 2026 LayoutLab.CSS by <span class="text-white font-semibold">MBS Services</span>. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 text-slate-500">
+                <a href="index.html" class="hover:text-slate-300">Quote Calc</a>
+                <span>•</span>
+                <a href="client-checker.html" class="hover:text-slate-300">Client Risk AI</a>
+                <span>•</span>
+                <a href="ecom.html" class="hover:text-slate-300">E-Com ROI</a>
+                <span>•</span>
+                <a href="cod-calculator.html" class="hover:text-slate-300">COD Margin</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Logic -->
+    <script>
+        let currentMode = 'flex';
+
+        function setMode(mode) {
+            currentMode = mode;
+            if (mode === 'flex') {
+                document.getElementById('flexControls').classList.remove('hidden');
+                document.getElementById('gridControls').classList.add('hidden');
+                document.getElementById('flexModeBtn').className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-cyan-500 text-slate-950 transition-all';
+                document.getElementById('gridModeBtn').className = 'flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white transition-all';
+            } else {
+                document.getElementById('flexControls').classList.add('hidden');
+                document.getElementById('gridControls').classList.remove('hidden');
+                document.getElementById('gridModeBtn').className = 'flex-1 py-2 text-xs font-bold rounded-xl bg-cyan-500 text-slate-950 transition-all';
+                document.getElementById('flexModeBtn').className = 'flex-1 py-2 text-xs font-bold rounded-xl text-slate-400 hover:text-white transition-all';
+            }
+            updateLayout();
+        }
+
+        function updateLayout() {
+            const gap = document.getElementById('layoutGap').value;
+            const items = parseInt(document.getElementById('itemCount').value);
+            document.getElementById('gapVal').innerText = gap + 'px';
+            document.getElementById('itemsVal').innerText = items + ' Items';
+
+            const canvas = document.getElementById('visualCanvas');
+            canvas.innerHTML = '';
+
+            for (let i = 1; i <= items; i++) {
+                const box = document.createElement('div');
+                box.className = 'bg-gradient-to-tr from-cyan-600 to-blue-600 text-white font-black text-sm p-4 rounded-xl shadow-lg border border-cyan-300/30 flex items-center justify-center min-w-[60px] min-h-[60px]';
+                box.innerText = '#' + i;
+                canvas.appendChild(box);
+            }
+
+            let css = '';
+            let tailwind = '';
+
+            if (currentMode === 'flex') {
+                const dir = document.getElementById('flexDirection').value;
+                const justify = document.getElementById('justifyContent').value;
+                const align = document.getElementById('alignItems').value;
+
+                canvas.style.display = 'flex';
+                canvas.style.flexDirection = dir;
+                canvas.style.justifyContent = justify;
+                canvas.style.alignItems = align;
+                canvas.style.gap = gap + 'px';
+                canvas.style.gridTemplateColumns = 'none';
+
+                css = `.container {\n  display: flex;\n  flex-direction: ${dir};\n  justify-content: ${justify};\n  align-items: ${align};\n  gap: ${gap}px;\n}`;
+                tailwind = `<div class="flex flex-${dir} justify-${justify.replace('flex-', '')} items-${align.replace('flex-', '')} gap-[${gap}px]">`;
+            } else {
+                const cols = document.getElementById('gridCols').value;
+                const rows = document.getElementById('gridRows').value;
+                document.getElementById('colsVal').innerText = cols + ' Columns';
+                document.getElementById('rowsVal').innerText = rows + ' Rows';
+
+                canvas.style.display = 'grid';
+                canvas.style.gridTemplateColumns = `repeat(${cols}, minmax(0, 1fr))`;
+                canvas.style.gap = gap + 'px';
+
+                css = `.container {\n  display: grid;\n  grid-template-columns: repeat(${cols}, 1fr);\n  gap: ${gap}px;\n}`;
+                tailwind = `<div class="grid grid-cols-${cols} gap-[${gap}px]">`;
+            }
+
+            document.getElementById('cssOutput').innerText = css;
+            document.getElementById('tailwindOutput').innerText = tailwind;
+        }
+
+        function copyCode(id) {
+            const code = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(code);
+            alert('Code copied to clipboard!');
+        }
+
+        // Initialize
+        updateLayout();
+    </script>
+</body>
+</html>
