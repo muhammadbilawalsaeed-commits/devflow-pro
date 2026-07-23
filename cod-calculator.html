@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Calculate local e-commerce cash on delivery (COD) profit margins, courier shipping fees, and RTO return losses. Free tool by MBS Services.">
+    <title>Local E-Commerce Courier & COD Profit Margin Finder | MBS Services</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emeraldBrand: {
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            950: '#022c22'
+                        },
+                        amberAccent: '#f59e0b',
+                        roseAccent: '#f43f5e'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .cod-grid {
+            background-image: radial-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen flex flex-col justify-between cod-grid">
+
+    <!-- Header Navigation -->
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-emerald-900/40 sticky top-0 z-50 shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <a href="index.html" class="flex items-center space-x-3">
+                <div class="bg-gradient-to-tr from-emerald-600 to-teal-500 p-2.5 rounded-xl text-white font-black text-xl shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-truck-fast"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-tight block leading-tight text-white">CODMargin<span class="text-emerald-400">.Pro</span></span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest">Powered by MBS Services</span>
+                </div>
+            </a>
+            <div class="flex items-center space-x-3">
+                <a href="quote.html" class="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-black px-4 py-2 rounded-xl text-xs transition-all shadow-lg shadow-emerald-500/20 flex items-center">
+                    <i class="fa-solid fa-code mr-1.5"></i> Build Store
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Ad Banner Slot -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full">
+        <div class="bg-slate-900/80 border border-dashed border-emerald-900/40 rounded-2xl p-3 text-center text-xs text-slate-500 uppercase tracking-widest font-semibold">
+            <span>Google AdSense Slot (Top Banner)</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        
+        <!-- Hero Section -->
+        <div class="text-center mb-10">
+            <span class="inline-flex items-center px-3.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 mb-3">
+                <i class="fa-solid fa-calculator mr-1.5"></i> Local E-Commerce & Delivery Profit Calculator
+            </span>
+            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+                Courier & COD Profit Margin Finder
+            </h1>
+            <p class="mt-3 text-sm sm:text-base text-slate-400 max-w-2xl mx-auto">
+                Calculate real net profit per order after product sourcing costs, Facebook/TikTok ad spends, courier delivery charges, and RTO (Return) losses.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Left Side: Inputs Panel (7 Cols) -->
+            <div class="lg:col-span-7 space-y-6">
+                
+                <div class="bg-slate-900 border border-emerald-900/30 rounded-3xl p-6 sm:p-7 shadow-2xl space-y-5">
+                    <h2 class="text-base font-bold text-white flex items-center border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-boxes-packing text-emerald-400 mr-2.5"></i> Order & Unit Financials
+                    </h2>
+
+                    <!-- Selling Price & Product Sourcing Cost -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Customer Selling Price (PKR/$) </label>
+                            <input type="number" id="sellingPrice" value="3500" oninput="calculateCOD()" placeholder="e.g. 3500" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Product Cost / Sourcing (PKR/$)</label>
+                            <input type="number" id="sourcingCost" value="1200" oninput="calculateCOD()" placeholder="e.g. 1200" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                    </div>
+
+                    <!-- Marketing (CPP/CPA) & Courier Charges -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Ad Spend / Cost Per Order (CPP)</label>
+                            <input type="number" id="adCost" value="800" oninput="calculateCOD()" placeholder="e.g. 800" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Courier Charges / Delivery Fee</label>
+                            <input type="number" id="courierFee" value="250" oninput="calculateCOD()" placeholder="e.g. 250" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                    </div>
+
+                    <!-- Return Rate (RTO) Slider -->
+                    <div class="pt-2">
+                        <div class="flex justify-between items-center mb-1">
+                            <label class="text-xs font-bold text-slate-300 uppercase tracking-wider">Estimated Courier RTO / Return Rate (%)</label>
+                            <span id="rtoVal" class="text-xs font-black text-amber-400">15% Returns</span>
+                        </div>
+                        <input type="range" id="rtoRate" min="0" max="40" step="1" value="15" oninput="calculateCOD()" class="w-full h-2 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-amber-500">
+                        <p class="text-[10px] text-slate-500 mt-1">*Local COD average return rate is between 12% to 20%.</p>
+                    </div>
+
+                    <!-- Return Delivery Penalty Fee -->
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Reverse / Return Shipping Charge Penalty</label>
+                        <input type="number" id="returnPenalty" value="150" oninput="calculateCOD()" placeholder="e.g. 150" class="w-full bg-slate-950 border border-slate-800 text-white text-xs rounded-xl p-3 outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+
+                </div>
+
+                <!-- Hostinger / Hosting Banner -->
+                <div class="bg-gradient-to-r from-slate-900 via-slate-900 to-emerald-950/50 border border-emerald-900/40 rounded-3xl p-5 shadow-xl flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] text-emerald-400 font-extrabold uppercase tracking-widest">Automate Orders & Reduce RTO</span>
+                        <h4 class="font-bold text-sm text-white mt-0.5">Need A High-Speed Custom Store?</h4>
+                        <p class="text-xs text-slate-400 mt-1">Get custom automated SMS order verification to cut returns by 50%.</p>
+                    </div>
+                    <a href="quote.html" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black px-4 py-2.5 rounded-xl transition-all shrink-0 ml-3 shadow-lg shadow-emerald-600/30">
+                        Hire Dev <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Right Side: Calculations & Net Profit Output (5 Cols) -->
+            <div class="lg:col-span-5 space-y-6">
+                
+                <!-- Net Profit Card -->
+                <div class="bg-slate-900 border border-emerald-900/40 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-emerald-600/10 rounded-full blur-2xl"></div>
+                    
+                    <span class="text-xs font-extrabold text-slate-400 uppercase tracking-wider block mb-1">Real Net Profit (Per Delivered Order)</span>
+                    <h3 id="netProfit" class="text-3xl sm:text-4xl font-black text-emerald-400 tracking-tight">Rs 872.50</h3>
+                    <p class="text-xs text-slate-400 mt-1">Adjusted after courier return losses & ad spend.</p>
+
+                    <!-- Breakdown Statistics -->
+                    <div class="mt-6 space-y-3 pt-4 border-t border-slate-800 text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Net Profit Margin (%):</span>
+                            <span id="profitMargin" class="font-bold text-emerald-400">24.9%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">Loss Per Return (RTO Order):</span>
+                            <span id="lossPerReturn" class="font-bold text-rose-400">- Rs 1,750</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400">100 Orders Net Profit:</span>
+                            <span id="totalBatchProfit" class="font-black text-amber-400">Rs 87,250</span>
+                        </div>
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-800/60">
+                            <span class="text-slate-300 font-bold">ROAS Needed To Breakeven:</span>
+                            <span id="minROAS" class="font-black text-sky-400">2.1x</span>
+                        </div>
+                    </div>
+
+                    <!-- Direct Lead CTA -->
+                    <a href="quote.html" class="w-full mt-6 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-slate-950 font-black py-3.5 px-4 rounded-2xl shadow-lg shadow-emerald-500/20 transition-all text-center block text-xs">
+                        <i class="fa-solid fa-laptop-code mr-1.5"></i> Build High-Converting Store Now
+                    </a>
+                </div>
+
+                <!-- Copyable Report -->
+                <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-xs font-extrabold text-slate-300 uppercase tracking-wider">
+                            <i class="fa-solid fa-copy text-emerald-400 mr-1.5"></i> Order Margin Summary
+                        </h3>
+                        <button onclick="copyCODReport()" class="text-xs bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded-xl text-slate-300 transition-all font-semibold">
+                            Copy Text
+                        </button>
+                    </div>
+                    <p id="codSummaryText" class="text-xs text-slate-400 leading-relaxed italic bg-slate-950 p-3.5 rounded-2xl border border-slate-800">
+                        <!-- Populated via JS -->
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Bottom Ad Banner Slot -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6 w-full">
+        <div class="bg-slate-900/80 border border-dashed border-emerald-900/40 rounded-2xl p-3 text-center text-xs text-slate-500 uppercase tracking-widest font-semibold">
+            <span>Google AdSense Slot (Bottom Banner)</span>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-6 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2">
+            <p>© 2026 CODMargin.Pro by <span class="text-white font-semibold">MBS Services</span>. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 text-slate-500">
+                <a href="index.html" class="hover:text-slate-300">Quote Calculator</a>
+                <span>•</span>
+                <a href="client-checker.html" class="hover:text-slate-300">Client Risk AI</a>
+                <span>•</span>
+                <a href="ecom.html" class="hover:text-slate-300">Shopify ROI Calc</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script Logic -->
+    <script>
+        function calculateCOD() {
+            const price = parseFloat(document.getElementById('sellingPrice').value) || 0;
+            const sourcing = parseFloat(document.getElementById('sourcingCost').value) || 0;
+            const ad = parseFloat(document.getElementById('adCost').value) || 0;
+            const courier = parseFloat(document.getElementById('courierFee').value) || 0;
+            const rto = parseFloat(document.getElementById('rtoRate').value) || 0;
+            const rtoPenalty = parseFloat(document.getElementById('returnPenalty').value) || 0;
+
+            document.getElementById('rtoVal').innerText = rto + '% Returns';
+
+            // Calculation Logic per 100 orders
+            const deliveredOrders = 100 - rto;
+            const returnedOrders = rto;
+
+            const revenue = deliveredOrders * price;
+            const totalSourcingCost = 100 * sourcing; // Sourcing cost spent on all units
+            const totalAdCost = 100 * ad; // Ad cost spent on all 100 orders
+            const totalCourierDelivered = deliveredOrders * courier;
+            const totalCourierReturnedPenalty = returnedOrders * rtoPenalty;
+
+            const totalExpenses = totalSourcingCost + totalAdCost + totalCourierDelivered + totalCourierReturnedPenalty;
+            const totalNetProfitBatch = revenue - totalExpenses;
+            
+            const netProfitPerDelivered = deliveredOrders > 0 ? (totalNetProfitBatch / deliveredOrders) : 0;
+            const marginPercent = price > 0 ? ((netProfitPerDelivered / price) * 100) : 0;
+
+            // Loss when 1 order gets returned
+            const singleReturnLoss = ad + rtoPenalty + sourcing;
+
+            // ROAS Breakeven
+            const minRoas = ad > 0 ? (price / (price - sourcing - courier)) : 1;
+
+            // Render Results
+            if(netProfitPerDelivered >= 0) {
+                document.getElementById('netProfit').innerText = 'Rs ' + Math.round(netProfitPerDelivered).toLocaleString();
+                document.getElementById('netProfit').className = 'text-3xl sm:text-4xl font-black text-emerald-400 tracking-tight';
+            } else {
+                document.getElementById('netProfit').innerText = 'Loss Rs ' + Math.abs(Math.round(netProfitPerDelivered)).toLocaleString();
+                document.getElementById('netProfit').className = 'text-3xl sm:text-4xl font-black text-rose-400 tracking-tight';
+            }
+
+            document.getElementById('profitMargin').innerText = marginPercent.toFixed(1) + '%';
+            document.getElementById('lossPerReturn').innerText = '- Rs ' + Math.round(singleReturnLoss).toLocaleString();
+            document.getElementById('totalBatchProfit').innerText = 'Rs ' + Math.round(totalNetProfitBatch).toLocaleString();
+            document.getElementById('minROAS').innerText = minRoas.toFixed(2) + 'x';
+
+            // Summary text render
+            const summary = `Local COD Margin Breakdown:
+- Selling Price: Rs ${price}
+- Sourcing: Rs ${sourcing} | Ad Spend: Rs ${ad} | Courier: Rs ${courier}
+- Est. RTO Rate: ${rto}%
+- Net Profit Per Delivered Unit: Rs ${Math.round(netProfitPerDelivered)} (${marginPercent.toFixed(1)}% Margin)
+- Total Profit on 100 Orders: Rs ${Math.round(totalNetProfitBatch)}`;
+
+            document.getElementById('codSummaryText').innerText = summary;
+        }
+
+        function copyCODReport() {
+            const text = document.getElementById('codSummaryText').innerText;
+            navigator.clipboard.writeText(text);
+            alert('COD Order Summary copied to clipboard!');
+        }
+
+        // Run on load
+        calculateCOD();
+    </script>
+</body>
+</html>
